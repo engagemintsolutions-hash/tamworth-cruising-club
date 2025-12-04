@@ -206,35 +206,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =============================================
-    // ADVANCED PARALLAX EFFECT
+    // ADVANCED PARALLAX EFFECT (desktop only)
     // =============================================
-    const hero = document.querySelector('.hero');
-    const heroContent = document.querySelector('.hero-content');
-    const heroBg = document.querySelector('.hero-bg');
-    const particles = document.querySelectorAll('.particle');
+    if (!isMobile) {
+        const hero = document.querySelector('.hero');
+        const heroContent = document.querySelector('.hero-content');
+        const heroBg = document.querySelector('.hero-bg');
+        const particles = document.querySelectorAll('.particle');
 
-    if (hero && heroContent) {
-        window.addEventListener('scroll', throttle(function() {
-            const scrolled = window.pageYOffset;
-            const heroHeight = hero.offsetHeight;
+        if (hero && heroContent) {
+            window.addEventListener('scroll', throttle(function() {
+                const scrolled = window.pageYOffset;
+                const heroHeight = hero.offsetHeight;
 
-            if (scrolled < heroHeight) {
-                const opacity = 1 - (scrolled / heroHeight) * 1.5;
-                const translateY = scrolled * 0.5;
-                const scale = 1 + scrolled * 0.0005;
+                if (scrolled < heroHeight) {
+                    const opacity = 1 - (scrolled / heroHeight) * 1.5;
+                    const translateY = scrolled * 0.5;
+                    const scale = 1 + scrolled * 0.0005;
 
-                heroContent.style.opacity = Math.max(0, opacity);
-                heroContent.style.transform = `translateY(${translateY}px)`;
+                    heroContent.style.opacity = Math.max(0, opacity);
+                    heroContent.style.transform = `translateY(${translateY}px)`;
 
-                if (heroBg) {
-                    heroBg.style.transform = `scale(${scale}) translateY(${scrolled * 0.3}px)`;
+                    if (heroBg) {
+                        heroBg.style.transform = `scale(${scale}) translateY(${scrolled * 0.3}px)`;
+                    }
+
+                    particles.forEach((p, i) => {
+                        p.style.transform = `translateY(${scrolled * (0.2 + i * 0.05)}px)`;
+                    });
                 }
-
-                particles.forEach((p, i) => {
-                    p.style.transform = `translateY(${scrolled * (0.2 + i * 0.05)}px)`;
-                });
-            }
-        }, 16));
+            }, 16));
+        }
     }
 
     // =============================================
